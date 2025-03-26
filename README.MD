@@ -1,4 +1,3 @@
-```markdown
 # Word-by-Word Translator
 
 This project is a web-based translation application that not only translates text but also provides a word-for-word breakdown, enhancing language learning and comprehension. It utilizes Flask for the web framework and the `deep_translator` library for translation.
@@ -84,4 +83,3 @@ Before running the application, ensure you have the following installed:
 ## Contributing
 
 Contributions are welcome! If you find any issues or have suggestions for improvements, please feel free to submit a pull request or open an issue.
-```
