@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WFW Translator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">Word for Word Translator</h1>
+    <form method="POST" class="bg-white p-4 rounded shadow-sm">
+      <!-- Text to Translate -->
+      <div class="mb-3">
+        <label for="text" class="form-label">Text to Translate:</label>
+        <textarea id="text" name="text" class="form-control" rows="4">{{ input_text or '' }}</textarea>
+      </div>
+
+        <!-- Source Language Dropdown -->
+      <div class="mb-3">
+        <label for="source_language" class="form-label">Source Language:</label>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="sourceLanguageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Select Source Language
+          </button>
+          <div class="dropdown-menu w-100" aria-labelledby="sourceLanguageDropdown">
+            <input type="text" placeholder="Search.." class="form-control mb-2" id="source_language_search" onkeyup="filterLanguages('source_language_dropdown')" autocomplete="off">
+            <div id="source_language_dropdown">
+              <a class="dropdown-item" href="#" onclick="selectLanguage('sourceLanguageDropdown', 'auto', 'Auto Detect')">Auto Detect</a>
+              {% for code, name in languages.items() %}
+                  <a class="dropdown-item" href="#" onclick="selectLanguage('sourceLanguageDropdown', '{{ code }}', '{{ name }}')">{{ name }}</a>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <input type="hidden" id="source_language" name="source_language" value="">
+      </div>
+
+      <!-- Target Language Dropdown -->
+      <div class="mb-3">
+        <label for="target_language" class="form-label">Target Language:</label>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="targetLanguageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Select Target Language
+          </button>
+          <div class="dropdown-menu w-100" aria-labelledby="targetLanguageDropdown">
+            <input type="text" placeholder="Search.." class="form-control mb-2" id="target_language_search" onkeyup="filterLanguages('target_language_dropdown')" autocomplete="off">
+            <div id="target_language_dropdown">
+              {% for code, name in languages.items() %}
+                <a class="dropdown-item" href="#" onclick="selectLanguage('targetLanguageDropdown', '{{ code }}', '{{ name }}')">{{ name }}</a>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <input type="hidden" id="target_language" name="target_language" value="">
+      </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary w-100">Translate</button>
+    </form>
+
+    <!-- Translated Text -->
+    {% if translated_text %}
+      <div class="mt-4 bg-white p-4 rounded shadow-sm">
+        <h3>Translation</h3>
+        <p>{{ translated_text }}</p>
+      </div>
+    {% endif %}
+
+    <!-- Translated Words -->
+    {% if translated_words %}
+      <div class="mt-4 bg-white p-4 rounded shadow-sm">
+        <h3>Breakdown</h3>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Word</th>
+              <th>Translation</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for word, translation in translated_words.items() %}
+              <tr>
+                <td>{{ word }}</td>
+                <td>{{ translation }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% endif %}
+  </div>
+</body>
+</html>
