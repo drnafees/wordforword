@@ -1,4 +1,4 @@
-# Word-by-Word Translator
+# Word-for-Word Translator
 
 This project is a web-based translation application that not only translates text but also provides a word-for-word breakdown, enhancing language learning and comprehension. It utilizes Flask for the web framework and the `deep_translator` library for translation.
 
